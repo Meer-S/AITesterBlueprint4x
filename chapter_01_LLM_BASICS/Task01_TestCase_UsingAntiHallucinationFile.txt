@@ -1,0 +1,210 @@
+Following the anti-hallucination rules, I will only generate test cases for requirements explicitly stated in the PRD. Where acceptance criteria or expected behavior are not defined, I will mark them as **Insufficient information to determine** rather than inventing behavior. 
+
+## Verified Facts
+
+The PRD explicitly specifies:
+
+* Login uses **email and password authentication**.
+* Session management with configurable timeout.
+* Optional Multi-Factor Authentication (2FA).
+* Enterprise SSO support.
+* Real-time validation on blur.
+* Email format validation.
+* Password strength indicators.
+* Clear error messages for failed authentication.
+* Forgot Password flow.
+* Password recovery through email.
+* Password complexity requirements.
+* Responsive UI.
+* Auto-focus on first input.
+* Clickable labels.
+* Loading state during authentication.
+* Screen reader support.
+* Keyboard accessibility.
+* High contrast mode.
+* Light/Dark themes.
+* HTTPS and encrypted authentication.
+* Dashboard transition after successful authentication.
+* Analytics integration for login success/failure. 
+
+---
+
+## Missing / Unknown Information
+
+The PRD does **not** specify:
+
+* Valid/invalid email examples
+* Password complexity rules
+* Exact error message text
+* Session timeout duration
+* Maximum login attempts
+* Lockout behavior
+* CAPTCHA
+* Supported browsers
+* Password maximum/minimum length
+* Remember Me duration
+* MFA authentication methods
+* Social login UI
+* API responses
+* Database validations
+* Exact loading indicator
+* Dashboard URL
+* Field length limits
+
+Therefore, test cases for these areas cannot specify expected values. 
+
+---
+
+# Generated Output (Test Cases)
+
+| TC ID  | Requirement            | Test Scenario                                    | Expected Result                              | Source |
+| ------ | ---------------------- | ------------------------------------------------ | -------------------------------------------- | ------ |
+| TC-001 | Email & Password Login | Login using email and password                   | User authentication is processed             |        |
+| TC-002 | Session Management     | Login successfully                               | Secure session is created                    |        |
+| TC-003 | MFA                    | Login for account configured with MFA            | MFA support is available                     |        |
+| TC-004 | Enterprise SSO         | Login using enterprise SSO                       | SSO authentication is supported              |        |
+| TC-005 | Email Validation       | Leave email field after entering invalid format  | Email format validation is performed         |        |
+| TC-006 | Real-time Validation   | Move focus away from input field                 | Validation occurs on blur                    |        |
+| TC-007 | Password Strength      | Enter password while creating/resetting password | Password strength indicator is displayed     |        |
+| TC-008 | Authentication Error   | Attempt failed authentication                    | Clear actionable error message is shown      |        |
+| TC-009 | Forgot Password        | Click Forgot Password                            | Password reset flow starts                   |        |
+| TC-010 | Password Recovery      | Recover password using email                     | Email-based recovery option is available     |        |
+| TC-011 | Responsive Design      | Open login page on mobile device                 | Interface is mobile optimized                |        |
+| TC-012 | Auto Focus             | Open login page                                  | First input field receives focus             |        |
+| TC-013 | Clickable Labels       | Click form label                                 | Associated input receives interaction        |        |
+| TC-014 | Loading State          | Submit login credentials                         | Loading feedback is displayed                |        |
+| TC-015 | Keyboard Navigation    | Navigate page using keyboard                     | Interactive elements are keyboard accessible |        |
+| TC-016 | Screen Reader          | Access login page using screen reader            | ARIA labels are supported                    |        |
+| TC-017 | High Contrast          | Enable high contrast mode                        | Accessibility mode is supported              |        |
+| TC-018 | Theme Support          | Switch between Light and Dark mode               | Theme support is available                   |        |
+| TC-019 | Secure Communication   | Access login page                                | Authentication communication uses HTTPS      |        |
+| TC-020 | Dashboard Transition   | Login successfully                               | User transitions to main dashboard           |        |
+| TC-021 | Analytics              | Perform successful login                         | Login success/failure tracking is integrated |        |
+
+---
+
+## Test Cases That Cannot Be Fully Written
+
+The following would violate the anti-hallucination rules because the PRD lacks sufficient detail:
+
+| Area                                  | Status                                |
+| ------------------------------------- | ------------------------------------- |
+| Invalid password combinations         | Insufficient information to determine |
+| Password minimum length               | Insufficient information to determine |
+| Password complexity validation values | Insufficient information to determine |
+| Session timeout duration              | Insufficient information to determine |
+| Remember Me expiration                | Insufficient information to determine |
+| Account lockout after failed attempts | Insufficient information to determine |
+| CAPTCHA validation                    | Insufficient information to determine |
+| Exact error message text              | Insufficient information to determine |
+| Browser compatibility                 | Insufficient information to determine |
+| API response validation               | Insufficient information to determine |
+
+---
+
+## Self-Validation Check
+
+* ✓ Only requirements explicitly present in the PRD were used.
+* ✓ No UI elements, workflows, or validations were invented.
+* ✓ Unknown behaviors are marked as **"Insufficient information to determine."**
+* ✓ Every test case is traceable to the provided PRD.
+* ✓ The output complies with the anti-hallucination process and deterministic output requirements. 
+
+Yes—this updated PRD is much more complete. It answers most of the questions that were previously missing (functional requirements, UX, security, performance, accessibility, KPIs, user flows, etc.). I can now derive significantly more comprehensive test cases while still following the anti-hallucination rules.
+
+Below is a sample of a professional QA test suite based **only** on the requirements documented in the PRD.
+
+| TC ID     | Module         | Test Scenario                                         | Preconditions             | Test Steps                                                                                      | Expected Result                                                                        | Priority | Requirement Reference                         |
+| --------- | -------------- | ----------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------- | --------------------------------------------- |
+| LOGIN-001 | Authentication | Verify successful login with valid email and password | Valid user account exists | 1. Open login page.<br>2. Enter valid email.<br>3. Enter valid password.<br>4. Click **Login**. | User is authenticated successfully and redirected to the VWO dashboard.                | High     | Authentication System, Dashboard Transition   |
+| LOGIN-002 | Authentication | Verify login failure with invalid credentials         | User account exists       | Enter invalid credentials and submit.                                                           | Clear, actionable authentication error message is displayed.                           | High     | Error Handling                                |
+| LOGIN-003 | Validation     | Verify email validation on blur                       | Login page loaded         | Enter invalid email format and move focus away.                                                 | Email validation is triggered immediately after blur.                                  | High     | Email Validation                              |
+| LOGIN-004 | Validation     | Verify real-time validation                           | Login page loaded         | Leave required field after entering invalid data.                                               | Validation occurs on blur with immediate feedback.                                     | High     | Real-time Validation                          |
+| LOGIN-005 | Password       | Verify password strength indicator                    | Password entry supported  | Enter passwords of varying strengths.                                                           | Password strength indicator is displayed. *(The PRD does not define strength levels.)* | Medium   | Password Strength                             |
+| LOGIN-006 | Password       | Verify Forgot Password flow                           | User has registered email | Click **Forgot Password**.                                                                      | Password reset process is initiated.                                                   | High     | Forgot Password                               |
+| LOGIN-007 | Password       | Verify email-based password recovery                  | Recovery page available   | Request password recovery.                                                                      | Email recovery option is available.                                                    | High     | Password Recovery                             |
+| LOGIN-008 | Session        | Verify secure session creation                        | Valid login               | Login successfully.                                                                             | Secure session is established. *(Timeout duration is not specified.)*                  | High     | Session Management                            |
+| LOGIN-009 | MFA            | Verify MFA-enabled login                              | MFA-enabled account       | Login with valid credentials.                                                                   | MFA authentication step is presented.                                                  | High     | MFA Support                                   |
+| LOGIN-010 | SSO            | Verify Enterprise SSO login                           | Enterprise SSO configured | Select SSO login.                                                                               | Authentication proceeds using enterprise SSO.                                          | High     | Enterprise SSO                                |
+
+### User Experience
+
+| TC ID  | Test Scenario                                        | Expected Result                                        | Requirement |
+| ------ | ---------------------------------------------------- | ------------------------------------------------------ | ----------- |
+| UX-001 | Verify first input field receives focus on page load | Email field is automatically focused                   |             |
+| UX-002 | Verify clickable labels                              | Clicking a label activates its associated field        |             |
+| UX-003 | Verify loading indicator during authentication       | Loading feedback is displayed while login is processed |             |
+| UX-004 | Verify responsive layout on mobile                   | Login page is mobile optimized                         |             |
+
+### Accessibility
+
+| TC ID   | Test Scenario                | Expected Result                                  | Requirement |
+| ------- | ---------------------------- | ------------------------------------------------ | ----------- |
+| ACC-001 | Verify keyboard navigation   | All interactive elements are keyboard accessible |             |
+| ACC-002 | Verify screen reader support | ARIA labels are available                        |             |
+| ACC-003 | Verify high contrast mode    | Accessibility mode is supported                  |             |
+
+### Security
+
+| TC ID   | Test Scenario                                     | Expected Result                       | Requirement |
+| ------- | ------------------------------------------------- | ------------------------------------- | ----------- |
+| SEC-001 | Verify HTTPS communication                        | Login communication uses SSL/TLS      |             |
+| SEC-002 | Verify encrypted authentication data transmission | Authentication data is encrypted      |             |
+| SEC-003 | Verify secure session token management            | Session token is securely managed     |             |
+| SEC-004 | Verify rate limiting protection                   | Brute-force protection is implemented |             |
+
+### Performance
+
+| TC ID    | Test Scenario                   | Expected Result                                          | Requirement |
+| -------- | ------------------------------- | -------------------------------------------------------- | ----------- |
+| PERF-001 | Measure login page load time    | Page loads within 2 seconds on standard connections      |             |
+| PERF-002 | Verify concurrent login support | System supports thousands of simultaneous login attempts |             |
+| PERF-003 | Verify availability             | Service meets 99.9% uptime target                        |             |
+
+### Still Not Defined in the PRD
+
+Even this expanded PRD intentionally does **not** specify some implementation details. To remain anti-hallucination compliant, these should not be invented:
+
+* Exact password complexity rules
+* Exact session timeout duration
+* Maximum failed login attempts before lockout
+* Exact authentication error message text
+* Supported browser versions
+* Input field maximum lengths
+* Exact MFA methods (SMS, TOTP, email, etc.)
+* "Remember Me" session duration
+
+These should remain **"Insufficient information to determine"** until explicitly documented. This approach stays compliant with the anti-hallucination guidance while producing traceable, requirement-based test cases.
+
+Below is a **JIRA-compatible Test Case table** based **only on the uploaded PRD**. It uses a format commonly imported into Jira Xray/Zephyr/Test Management plugins.
+
+| Test Case ID | Summary                                            | Preconditions                    | Test Steps                                                                                          | Test Data                   | Expected Result                                                                       | Priority | Requirement                   | Traceability |
+| ------------ | -------------------------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------- | -------- | ----------------------------- | ------------ |
+| LOGIN-001    | Verify successful login with valid credentials     | Registered user account exists   | 1. Open VWO Login page.<br>2. Enter valid email.<br>3. Enter valid password.<br>4. Click **Login**. | Valid Email, Valid Password | User is authenticated successfully and redirected to the VWO Dashboard.               | High     | Primary Authentication        |              |
+| LOGIN-002    | Verify login with invalid credentials              | Registered user account exists   | Enter invalid email/password and click Login.                                                       | Invalid credentials         | Authentication fails and a clear actionable error message is displayed.               | High     | Error Handling                |              |
+| LOGIN-003    | Verify email validation on blur                    | Login page is open               | Enter an invalid email format and move focus to another field.                                      | Invalid email format        | Email format validation is triggered on blur.                                         | High     | Email Format Verification     |              |
+| LOGIN-004    | Verify real-time field validation                  | Login page is open               | Leave a field after entering invalid data.                                                          | Invalid input               | Validation feedback is displayed immediately after blur.                              | High     | Real-time Validation          |              |
+| LOGIN-005    | Verify password strength indicator                 | Password field available         | Enter different passwords.                                                                          | Various passwords           | Password strength indicator is displayed. *(Strength criteria not specified in PRD.)* | Medium   | Password Strength Indicator   |              |
+| LOGIN-006    | Verify Forgot Password functionality               | Login page is open               | Click **Forgot Password**.                                                                          | Registered email            | Password reset flow is initiated.                                                     | High     | Forgot Password               |              |
+| LOGIN-007    | Verify email-based password recovery               | Password recovery page available | Request password recovery.                                                                          | Registered email            | Email-based password recovery option is available.                                    | High     | Password Recovery             |              |
+| LOGIN-008    | Verify secure session creation after login         | Valid user exists                | Login successfully.                                                                                 | Valid credentials           | Secure user session is created.                                                       | High     | Session Management            |              |
+| LOGIN-009    | Verify Multi-Factor Authentication flow            | MFA-enabled account              | Login with valid credentials.                                                                       | MFA-enabled account         | User is prompted for MFA verification.                                                | High     | Multi-Factor Authentication   |              |
+| LOGIN-010    | Verify Enterprise SSO login                        | Enterprise SSO configured        | Select SSO login and authenticate.                                                                  | Enterprise account          | User logs in using Enterprise SSO.                                                    | High     | Enterprise SSO                |              |
+| UX-001       | Verify auto-focus on first input field             | Login page opened                | Launch login page.                                                                                  | N/A                         | First input field receives focus automatically.                                       | Medium   | Auto-focus                    |              |
+| UX-002       | Verify clickable labels                            | Login page opened                | Click each form label.                                                                              | N/A                         | Associated input field is activated.                                                  | Medium   | Clickable Labels              |              |
+| UX-003       | Verify loading indicator during authentication     | Login page opened                | Submit login request.                                                                               | Valid credentials           | Loading state is displayed during authentication.                                     | Medium   | Loading States                |              |
+| UX-004       | Verify responsive login page                       | Mobile device/browser            | Open login page on mobile device.                                                                   | Mobile browser              | Login page is responsive and touch-friendly.                                          | Medium   | Responsive Design             |              |
+| ACC-001      | Verify keyboard accessibility                      | Login page opened                | Navigate through page using keyboard only.                                                          | Keyboard                    | All interactive elements are keyboard accessible.                                     | High     | Keyboard Navigation           |              |
+| ACC-002      | Verify screen reader compatibility                 | Screen reader enabled            | Navigate login page using screen reader.                                                            | Screen reader               | ARIA labels are available for accessible navigation.                                  | High     | Screen Reader Support         |              |
+| ACC-003      | Verify High Contrast Mode                          | High Contrast Mode enabled       | Open login page.                                                                                    | High Contrast Mode          | Login page supports high contrast accessibility.                                      | Medium   | High Contrast Mode            |              |
+| UI-001       | Verify Light and Dark theme support                | Login page opened                | Switch between available themes.                                                                    | N/A                         | Light and Dark themes are available.                                                  | Medium   | Theme Support                 |              |
+| SEC-001      | Verify HTTPS enforcement                           | Login page available             | Access login page.                                                                                  | HTTPS URL                   | Login communication uses SSL/TLS.                                                     | Critical | HTTPS Enforcement             |              |
+| SEC-002      | Verify encrypted authentication transmission       | Login page available             | Submit login credentials.                                                                           | Valid credentials           | Authentication data is transmitted securely.                                          | Critical | Encryption                    |              |
+| SEC-003      | Verify secure session token handling               | Successful login                 | Login successfully.                                                                                 | Valid credentials           | Session token is securely generated and managed.                                      | Critical | Session Security              |              |
+| SEC-004      | Verify rate limiting protection                    | Login page available             | Perform repeated authentication attempts.                                                           | Multiple login attempts     | Rate limiting protection is implemented. *(Threshold not specified.)*                 | High     | Rate Limiting                 |              |
+| PERF-001     | Verify login page load time                        | Standard network connection      | Open login page.                                                                                    | Standard connection         | Login page loads within 2 seconds.                                                    | High     | Page Load Speed               |              |
+| PERF-002     | Verify support for concurrent logins               | Test environment configured      | Simulate multiple simultaneous login requests.                                                      | Concurrent users            | System supports thousands of simultaneous login attempts.                             | High     | Concurrent Users              |              |
+| INT-001      | Verify dashboard navigation after successful login | Valid user exists                | Login successfully.                                                                                 | Valid credentials           | User is redirected to the main VWO Dashboard.                                         | High     | VWO Core Platform Integration |              |
+| INT-002      | Verify login analytics integration                 | Analytics enabled                | Perform successful and failed login attempts.                                                       | Valid/Invalid credentials   | Login success/failure events are tracked.                                             | Medium   | Analytics Integration         |              |
+
+This format is suitable for **Jira Xray**, **Zephyr Scale**, **Zephyr Squad**, or CSV import. It includes the fields typically required in enterprise test management: **Test Case ID, Summary, Preconditions, Steps, Test Data, Expected Result, Priority, Requirement, and Traceability**.
