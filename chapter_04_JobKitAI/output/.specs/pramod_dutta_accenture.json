@@ -1,0 +1,110 @@
+{
+  "output": "/Users/promode/Documents/AITesterBlueprin4x/chapter_04_JobKitAI/output/Pramod_Dutta_Accenture_Test_Automation_Lead.docx",
+  "docTitle": "Pramod Dutta — Test Automation Lead — Accenture in India",
+  "name": "PRAMOD DUTTA",
+  "title": "==TEST AUTOMATION LEAD==  ·  QUALITY ENGINEERING & ==FUNCTIONAL TEST PLANNING==",
+  "contact": [
+    ["Bengaluru, Karnataka, India", "pramoddutta@live.com|mailto:pramoddutta@live.com", "+91 96863 18062"],
+    ["linkedin.com/in/pramoddutta|https://linkedin.com/in/pramoddutta", "github.com/pramoddutta|https://github.com/pramoddutta", "thetestingacademy.com|https://thetestingacademy.com"]
+  ],
+  "margin": 0.45,
+  "sections": [
+    {
+      "heading": "SUMMARY",
+      "body": "==Test Automation Lead== and quality engineering leader with [confirm total years]+ years ==transforming testing into continuous, efficient quality engineering practices== for SaaS, developer-tooling, and automotive-retail platforms. Architect of frameworks covering **9,000+ automated test cases** in CI/CD and a Docker Swarm-based Selenium Grid executing **3,500+ tests daily**. Founder of TheTestingAcademy, a QA education brand reaching [audience size]+ engineers."
+    },
+    {
+      "heading": "CORE SKILLS",
+      "rows": [
+        ["==Quality Engineering==", "==Functional test planning== · Test strategy and estimation · Shift-left QA · Quality processes and review gates · Agile / Scrum (PSM I)"],
+        ["==Automation Architecture==", "Selenium WebDriver · Cypress · Protractor · WebdriverJS · CasperJS · PhantomCSS · Cucumber"],
+        ["API & Services", "REST API testing · Custom Node.js API frameworks"],
+        ["CI/CD & Infrastructure", "Jenkins · Docker · Docker Swarm · Selenium Grid · Git"],
+        ["Languages", "Java · JavaScript / Node.js · Ruby · [confirm Python and TypeScript proficiency]"],
+        ["Leadership", "Team leadership · Hiring and onboarding · Code review · Career development · Workshops and training"],
+        ["Tools", "JIRA · Confluence · BrowserStack · Percy · Grunt"]
+      ],
+      "note": "FIT GAPS — Accenture requires 15 years of Functional Test Planning and 15 years of full-time education. The supplied resume states 13+ years but documents roles only from May 2016. Add the pre-2016 role history and exact education details before applying. Do not add predictive/intelligent testing unless you have delivered it and can describe the work."
+    },
+    {
+      "heading": "PROFESSIONAL EXPERIENCE",
+      "roles": [
+        {
+          "title": "Lead SDET",
+          "org": "Tekion Corp",
+          "meta": "Dec 2020 – Present  |  Bengaluru, India  |  Automotive retail cloud platform",
+          "bullets": [
+            "==Lead end-to-end functional test planning and automation strategy== for a multi-dealer SaaS platform, covering **9,000+ automated test cases** across web and API layers in [dealer environment count] environments.",
+            "==Define test strategies and estimates== for manual, automation, and API testing, aligning quality engineering work with evolving release requirements.",
+            "==Lead a team of [team size] SDETs== across hiring, onboarding, code review, and career development; grew the automation function from [starting team size] to [current team size] engineers.",
+            "==Establish organization-wide automation guidelines and review gates== adopted by [team count] teams, improving consistency across multiple engineering squads.",
+            "Continuously refine regression strategy, cutting the full cycle from [baseline duration] to [current duration] and enabling [release frequency] releases.",
+            "Raised automated regression coverage from [baseline percentage]% to [current percentage]% and reduced production defect escapes by [reduction percentage]% across [squad count] squads."
+          ]
+        },
+        {
+          "title": "QA Lead",
+          "org": "BrowserStack",
+          "meta": "Dec 2019 – Dec 2020  |  Mumbai, India  |  Developer testing infrastructure",
+          "bullets": [
+            "==Led quality assurance and release readiness== for four products: Percy, Local Binary, Live, and App Live, serving [customer count]+ developer customers.",
+            "Designed and shipped a hybrid automation framework using Selenium WebDriver, Ruby, Cucumber, Cypress, and Jenkins, adopted by [product team count] product teams.",
+            "Replaced manual regression processes with automated coverage, eliminating [hours saved] hours per release and shortening the QA cycle by [cycle reduction percentage]%.",
+            "Collaborated with product and engineering teams on quality decisions for [release count] releases across a broad browser and device matrix."
+          ]
+        },
+        {
+          "title": "Senior SDET · Test Architect",
+          "org": "Wingify (VWO)",
+          "meta": "May 2016 – Dec 2019  |  New Delhi, India  |  A/B testing and experimentation SaaS",
+          "bullets": [
+            "Served as test architect for VWO.com, an A/B testing and experimentation platform serving [customer count]+ customers.",
+            "Built and scaled a Docker Swarm-based Selenium Grid executing **3,500+ automated tests daily** in CI/CD with parallel execution, cutting suite runtime from [baseline runtime] to [current runtime].",
+            "Created UI automation for the VWO website and app with Node.js, CasperJS, and PhantomCSS, plus end-to-end suites using Selenium WebDriverJS and Protractor orchestrated through Jenkins and Grunt.",
+            "Developed a custom Node.js API testing framework validating **200+ enterprise API endpoints daily**.",
+            "Identified critical security vulnerabilities in PushCrew during the internal Hack Your Own Code programme."
+          ]
+        },
+        {
+          "title": "[Pre-2016 role title]",
+          "org": "[Pre-2016 company]",
+          "meta": "[Start date] – Apr 2016  |  [Location]  |  [Domain]",
+          "bullets": [
+            "[Add two evidence-based bullets covering responsibilities, tools, scale, and outcomes.]"
+          ]
+        }
+      ],
+      "note": "TIMELINE CHECK — the listed employment begins in May 2016 and does not substantiate the stated 13+ years or Accenture's 15-year minimum. Add all relevant pre-2016 employment with accurate dates."
+    },
+    {
+      "heading": "FOUNDER & INSTRUCTOR — THETESTINGACADEMY",
+      "roles": [
+        {
+          "title": "Founder & Instructor",
+          "org": "TheTestingAcademy",
+          "meta": "2016 – Present  |  QA education brand  |  thetestingacademy.com",
+          "bullets": [
+            "==Facilitate training that builds quality engineering capabilities== for [subscriber count]+ YouTube subscribers, [student count]+ students, and [monthly reader count]+ monthly readers across Selenium, API testing, Playwright, and CI/CD.",
+            "Published [tutorial count]+ tutorials and [course count] structured courses for working QA engineers.",
+            "[Add speaking engagements, conference talks, or open-source contributions, if applicable.]"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "EDUCATION",
+      "rows": [
+        ["[Degree and field]", "[University] · [Graduation year] · [Confirm 15 years of full-time education]"]
+      ]
+    },
+    {
+      "heading": "CERTIFICATIONS & AWARDS",
+      "bullets": [
+        "Professional Scrum Master I (PSM I) — Scrum.org, [year]",
+        "Team Lead Award, BrowserStack — [verify date; supplied date predates employment]",
+        "Hack Your Own Code recognition, Wingify — identified critical security vulnerabilities in PushCrew",
+        "[Add verified 2021–2026 certifications, or delete this line.]"
+      ]
+    }
+  ]
+}

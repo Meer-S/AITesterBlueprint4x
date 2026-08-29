@@ -9,3 +9,7 @@ target/
 .env
 config.json
 __pycache__/
+.tmp/
+out/
+.playwright-mcp/
+main.png

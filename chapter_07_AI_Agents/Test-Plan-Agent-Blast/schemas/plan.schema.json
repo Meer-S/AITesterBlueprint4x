@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "plan.schema.json",
+  "title": "TestPlan",
+  "type": "object",
+  "required": ["objective", "scope", "inclusions", "environments", "strategy",
+               "deliverables", "entry_exit", "tools", "risks", "assumptions"],
+  "additionalProperties": false,
+  "properties": {
+    "objective": { "type": "string", "minLength": 40 },
+    "target_url": { "type": ["string", "null"] },
+    "scope": {
+      "type": "array", "minItems": 1, "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["type", "rationale", "justified_by"],
+        "additionalProperties": false,
+        "properties": {
+          "type": { "enum": ["Functional", "Data Validation", "Error Handling",
+            "Performance", "Security", "Integration", "Compatibility",
+            "Documentation Review", "Load", "Regression", "Edge Case",
+            "Concurrency", "Exploratory", "Usability", "CI/CD", "Rate Limiting",
+            "Backup and Recovery", "Internationalization", "Accessibility"] },
+          "rationale": { "type": "string", "minLength": 20 },
+          "justified_by": { "type": "string", "minLength": 10 }
+        }
+      }
+    },
+    "inclusions": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["group", "items"], "additionalProperties": false,
+        "properties": {
+          "group": { "type": "string" },
+          "items": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "environments": { "type": "array", "items": {
+      "type": "object", "required": ["name", "url", "assumed"], "additionalProperties": false,
+      "properties": { "name": { "type": "string" }, "url": { "type": "string" },
+                      "assumed": { "type": "boolean" } }
+    }},
+    "strategy": {
+      "type": "object", "required": ["techniques", "execution_flow"], "additionalProperties": false,
+      "properties": {
+        "techniques": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "execution_flow": { "type": "string" },
+        "best_practices": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "schedule": { "type": "array", "items": {
+      "type": "object", "required": ["task", "dates", "assumed"], "additionalProperties": false,
+      "properties": { "task": { "type": "string" }, "dates": { "type": "string" },
+                      "assumed": { "type": "boolean" } }
+    }},
+    "deliverables": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "entry_exit": { "type": "array", "items": {
+      "type": "object", "required": ["phase", "entry", "exit"], "additionalProperties": false,
+      "properties": { "phase": { "type": "string" }, "entry": { "type": "string" },
+                      "exit": { "type": "string" } }
+    }},
+    "defect_process": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "tool": { "type": "string" },
+        "severity_model": { "type": "string" },
+        "pocs": { "type": "array", "items": {
+          "type": "object", "required": ["area", "poc", "assumed"], "additionalProperties": false,
+          "properties": { "area": { "type": "string" }, "poc": { "type": "string" },
+                          "assumed": { "type": "boolean" } }
+        }}
+      }
+    },
+    "tools": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "risks": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["risk", "mitigation"], "additionalProperties": false,
+        "properties": { "risk": { "type": "string" }, "mitigation": { "type": "string" } }
+      }
+    },
+    "assumptions": { "type": "array", "items": {
+      "type": "object", "required": ["field", "assumed_value", "why"], "additionalProperties": false,
+      "properties": { "field": { "type": "string" }, "assumed_value": { "type": "string" },
+                      "why": { "type": "string" } }
+    }},
+    "dropped_scope": { "type": "array", "items": {
+      "type": "object", "required": ["type", "reason"], "additionalProperties": false,
+      "properties": { "type": { "type": "string" }, "reason": { "type": "string" } }
+    }}
+  }
+}

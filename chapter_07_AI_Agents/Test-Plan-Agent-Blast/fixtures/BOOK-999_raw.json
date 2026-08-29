@@ -1,0 +1,49 @@
+{
+  "issue": {
+    "key": "BOOK-999",
+    "fields": {
+      "summary": "Fix bug",
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "It is broken."
+              }
+            ]
+          }
+        ]
+      },
+      "issuetype": {
+        "name": "Bug"
+      },
+      "status": {
+        "name": "To Do"
+      },
+      "labels": [],
+      "components": [],
+      "fixVersions": []
+    },
+    "names": {
+      "summary": "Summary"
+    },
+    "renderedFields": {
+      "description": "<p>It is broken.</p>"
+    }
+  },
+  "comments": [],
+  "remote_links": [],
+  "_meta": {
+    "site": "https://example.atlassian.net",
+    "requests": [
+      {
+        "path": "fixture",
+        "status": 200
+      }
+    ]
+  }
+}

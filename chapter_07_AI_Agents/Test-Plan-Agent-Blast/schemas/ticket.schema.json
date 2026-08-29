@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ticket.schema.json",
+  "title": "NormalizedJiraTicket",
+  "type": "object",
+  "required": ["key", "url", "summary", "issue_type", "description_md",
+               "acceptance_criteria", "source", "fetched_at", "gaps"],
+  "additionalProperties": false,
+  "properties": {
+    "key": { "type": "string", "pattern": "^[A-Z][A-Z0-9]+-[0-9]+$" },
+    "url": { "type": "string" },
+    "summary": { "type": "string", "minLength": 1 },
+    "issue_type": { "type": "string" },
+    "status": { "type": ["string", "null"] },
+    "priority": { "type": ["string", "null"] },
+    "labels": { "type": "array", "items": { "type": "string" } },
+    "components": { "type": "array", "items": { "type": "string" } },
+    "fix_versions": { "type": "array", "items": { "type": "string" } },
+    "environment": { "type": ["string", "null"] },
+    "description_md": { "type": "string" },
+    "description_html": { "type": ["string", "null"] },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "origin"],
+        "additionalProperties": false,
+        "properties": {
+          "text": { "type": "string" },
+          "origin": { "enum": ["custom_field", "description_heading", "comment", "linked_page"] },
+          "ref": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "people": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "assignee": { "type": ["string", "null"] },
+        "reporter": { "type": ["string", "null"] }
+      }
+    },
+    "schedule": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "sprint_name": { "type": ["string", "null"] },
+        "sprint_start": { "type": ["string", "null"] },
+        "sprint_end": { "type": ["string", "null"] },
+        "due_date": { "type": ["string", "null"] },
+        "created": { "type": ["string", "null"] },
+        "updated": { "type": ["string", "null"] }
+      }
+    },
+    "relations": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "parent": { "type": ["string", "null"] },
+        "subtasks": { "type": "array", "items": { "type": "string" } },
+        "links": { "type": "array", "items": {
+          "type": "object", "required": ["type", "key"],
+          "properties": {
+            "type": { "type": "string" }, "key": { "type": "string" },
+            "summary": { "type": ["string", "null"] }
+          }
+        }},
+        "remote_links": { "type": "array", "items": {
+          "type": "object", "required": ["title", "url"],
+          "properties": { "title": { "type": "string" }, "url": { "type": "string" } }
+        }}
+      }
+    },
+    "comments": { "type": "array", "items": {
+      "type": "object", "required": ["id", "author", "created", "body_md"],
+      "properties": {
+        "id": { "type": "string" }, "author": { "type": "string" },
+        "created": { "type": "string" }, "body_md": { "type": "string" }
+      }
+    }},
+    "attachments": { "type": "array", "items": {
+      "type": "object", "required": ["id", "filename", "mime_type", "size"],
+      "properties": {
+        "id": { "type": "string" }, "filename": { "type": "string" },
+        "mime_type": { "type": "string" }, "size": { "type": "integer", "minimum": 0 }
+      }
+    }},
+    "source": {
+      "type": "object", "required": ["transport", "api_version", "site"],
+      "properties": {
+        "transport": { "enum": ["rest", "mcp", "file", "fixture"] },
+        "api_version": { "type": "string" }, "site": { "type": "string" }
+      }
+    },
+    "fetched_at": { "type": "string" },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "unknown_adf_nodes": { "type": "array", "items": { "type": "string" } }
+  }
+}

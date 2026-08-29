@@ -1,0 +1,560 @@
+{
+  "issue": {
+    "key": "BOOK-214",
+    "fields": {
+      "summary": "Validate booking date range on create and update",
+      "description": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Background"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "The Booking API currently allows a guest to create a reservation without validating that the check-out date is after the check-in date. Support has raised "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "14 tickets",
+                "marks": [
+                  {
+                    "type": "strong"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": " in the last sprint from this. See the "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "design doc",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://confluence.example.com/booking-dates"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Requirements"
+              }
+            ]
+          },
+          {
+            "type": "bulletList",
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "POST /booking must reject a reservation where checkout <= checkin with HTTP 400."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "The error body must name the offending field."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "PATCH /booking/{id} must apply the same rule when either date changes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Existing reservations that already violate the rule must not be broken by the change."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Error contract"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "content": [
+              {
+                "type": "tableRow",
+                "content": [
+                  {
+                    "type": "tableHeader",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Case"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableHeader",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Status"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableHeader",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Code"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableRow",
+                "content": [
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "checkout before checkin"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "400"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "DATE_RANGE_INVALID"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "tableRow",
+                "content": [
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "checkout equals checkin"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "400"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableCell",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "DATE_RANGE_ZERO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 2
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Sample response"
+              }
+            ]
+          },
+          {
+            "type": "codeBlock",
+            "attrs": {
+              "language": "json"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "{\n  \"error\": \"DATE_RANGE_INVALID\",\n  \"field\": \"checkout\"\n}"
+              }
+            ]
+          },
+          {
+            "type": "panel",
+            "attrs": {
+              "panelType": "warning"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Rate limiting is already applied at the gateway. Do not add a second limiter."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "rule"
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Perf target: p95 under 300ms at 50 rps."
+              }
+            ]
+          },
+          {
+            "type": "expand",
+            "attrs": {
+              "title": "Notes"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Legacy clients send dates as epoch millis."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "issuetype": {
+        "name": "Story"
+      },
+      "status": {
+        "name": "In Progress"
+      },
+      "priority": {
+        "name": "High"
+      },
+      "labels": [
+        "api",
+        "validation",
+        "backend"
+      ],
+      "components": [
+        {
+          "name": "Booking API"
+        }
+      ],
+      "fixVersions": [
+        {
+          "name": "2026.9.0"
+        }
+      ],
+      "environment": "QA: https://qa-booking.example.com  |  Pre-prod: https://preprod-booking.example.com",
+      "assignee": {
+        "displayName": "A. Developer"
+      },
+      "reporter": {
+        "displayName": "B. ProductOwner"
+      },
+      "duedate": "2026-09-12",
+      "created": "2026-08-20T10:04:00.000+0530",
+      "updated": "2026-08-28T16:21:00.000+0530",
+      "parent": {
+        "key": "BOOK-200"
+      },
+      "subtasks": [
+        {
+          "key": "BOOK-215"
+        },
+        {
+          "key": "BOOK-216"
+        }
+      ],
+      "issuelinks": [
+        {
+          "type": {
+            "outward": "blocks"
+          },
+          "outwardIssue": {
+            "key": "BOOK-230",
+            "fields": {
+              "summary": "Booking UI date picker"
+            }
+          }
+        }
+      ],
+      "attachment": [
+        {
+          "id": "10501",
+          "filename": "date-validation-spec.pdf",
+          "mimeType": "application/pdf",
+          "size": 84213
+        }
+      ],
+      "customfield_10034": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "bulletList",
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Given a booking request where checkout is before checkin, when POST /booking is called, then the API returns 400 with code DATE_RANGE_INVALID."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Given a booking request where checkout equals checkin, when POST /booking is called, then the API returns 400 with code DATE_RANGE_ZERO."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Given a valid date range, when POST /booking is called, then the booking is created and returns 201."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Given an existing booking, when PATCH /booking/{id} sets an invalid range, then the API returns 400 and the booking is unchanged."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "names": {
+      "summary": "Summary",
+      "description": "Description",
+      "customfield_10034": "Acceptance Criteria",
+      "customfield_10011": "Epic Name",
+      "customfield_10020": "Sprint"
+    },
+    "renderedFields": {
+      "description": "<h2>Background</h2><p>The Booking API currently allows a guest to create a reservation without validating that the check-out date is after the check-in date. Support has raised <b>14 tickets</b> in the last sprint from this. See the <a href='#'>design doc</a></p><h2>Requirements</h2><ul><li>POST /booking must reject a reservation where checkout &lt;= checkin with HTTP 400.</li><li>The error body must name the offending field.</li><li>PATCH /booking/{id} must apply the same rule when either date changes.</li><li>Existing reservations that already violate the rule must not be broken by the change.</li></ul><h2>Error contract</h2><table><tr><th>Case</th><th>Status</th><th>Code</th></tr><tr><td>checkout before checkin</td><td>400</td><td>DATE_RANGE_INVALID</td></tr><tr><td>checkout equals checkin</td><td>400</td><td>DATE_RANGE_ZERO</td></tr></table><h2>Sample response</h2><pre>{ \"error\": \"DATE_RANGE_INVALID\", \"field\": \"checkout\" }</pre><p>Rate limiting is already applied at the gateway. Do not add a second limiter.</p><hr/><p>Perf target: p95 under 300ms at 50 rps.</p><p>Legacy clients send dates as epoch millis.</p>"
+    }
+  },
+  "comments": [
+    {
+      "id": "20101",
+      "author": {
+        "displayName": "C. Tester"
+      },
+      "created": "2026-08-26T09:00:00.000+0530",
+      "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Confirmed with the gateway team: the 429 path is out of scope for this story."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "remote_links": [
+    {
+      "object": {
+        "title": "Date validation design",
+        "url": "https://confluence.example.com/booking-dates"
+      }
+    }
+  ],
+  "_meta": {
+    "site": "https://example.atlassian.net",
+    "requests": [
+      {
+        "path": "fixture",
+        "status": 200
+      }
+    ]
+  }
+}

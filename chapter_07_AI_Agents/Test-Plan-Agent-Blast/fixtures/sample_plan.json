@@ -1,0 +1,205 @@
+{
+  "objective": "Verify that the Booking API rejects reservations whose check-out date is not strictly after the check-in date, on both the create and update paths, without breaking existing reservations that already violate the rule.",
+  "target_url": "https://qa-booking.example.com",
+  "scope": [
+    {
+      "type": "Functional",
+      "rationale": "Confirm POST /booking and PATCH /booking/{id} enforce the date-range rule and that valid ranges still succeed.",
+      "justified_by": "Acceptance criteria 1 to 4 describe create and update behaviour explicitly."
+    },
+    {
+      "type": "Data Validation",
+      "rationale": "Exercise the boundary where checkout equals checkin, which the ticket separates from checkout before checkin.",
+      "justified_by": "Error contract table distinguishes DATE_RANGE_INVALID from DATE_RANGE_ZERO."
+    },
+    {
+      "type": "Error Handling",
+      "rationale": "Assert the 400 response body names the offending field and carries the documented error code.",
+      "justified_by": "Requirement: 'The error body must name the offending field.'"
+    },
+    {
+      "type": "Regression",
+      "rationale": "Confirm reservations that already violate the rule are readable and updatable on unrelated fields.",
+      "justified_by": "Requirement: 'Existing reservations that already violate the rule must not be broken.'"
+    },
+    {
+      "type": "Performance",
+      "rationale": "Measure p95 latency of the create path under the stated load to confirm validation adds no material cost.",
+      "justified_by": "Description states 'Perf target: p95 under 300ms at 50 rps.'"
+    },
+    {
+      "type": "Integration",
+      "rationale": "Verify the booking UI date picker consumes the new error codes correctly.",
+      "justified_by": "Issue link: BOOK-214 blocks BOOK-230 Booking UI date picker."
+    }
+  ],
+  "inclusions": [
+    {
+      "group": "Create (POST /booking)",
+      "items": [
+        "checkout before checkin returns 400 DATE_RANGE_INVALID",
+        "checkout equal to checkin returns 400 DATE_RANGE_ZERO",
+        "valid range returns 201 and persists the booking",
+        "error body names the offending field"
+      ]
+    },
+    {
+      "group": "Update (PATCH /booking/{id})",
+      "items": [
+        "setting an invalid range returns 400",
+        "the booking is unchanged after a rejected update",
+        "changing only checkin re-validates the whole range",
+        "changing only checkout re-validates the whole range"
+      ]
+    },
+    {
+      "group": "Backward compatibility",
+      "items": [
+        "an existing booking that violates the rule is still readable",
+        "an unrelated field on a violating booking can still be updated"
+      ]
+    },
+    {
+      "group": "Boundary and data validation",
+      "items": [
+        "dates one second apart",
+        "dates sent as epoch millis by legacy clients",
+        "missing checkin or checkout",
+        "malformed date strings"
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "name": "QA",
+      "url": "https://qa-booking.example.com",
+      "assumed": false
+    },
+    {
+      "name": "Pre-prod",
+      "url": "https://preprod-booking.example.com",
+      "assumed": false
+    }
+  ],
+  "strategy": {
+    "techniques": [
+      "Boundary Value Analysis on the checkin/checkout pair",
+      "Equivalence Class Partitioning across valid, inverted and zero-length ranges",
+      "Decision Table for the create and update paths against each error code",
+      "Error Guessing for malformed and legacy date formats"
+    ],
+    "execution_flow": "Run a smoke pass over the create and update endpoints first. If smoke fails, reject the build and wait for a stable one. On a stable build, execute the designed cases across QA and pre-prod, log defects in Jira, and send an end-of-day defect status summary. Repeat until the exit criteria are met.",
+    "best_practices": [
+      "Shift-left review of the error contract before execution",
+      "Exploratory session against legacy date formats",
+      "End-to-end check through the booking UI once BOOK-230 lands"
+    ]
+  },
+  "schedule": [
+    {
+      "task": "Test case creation",
+      "dates": "Before the 2026.9.0 fix version",
+      "assumed": true
+    },
+    {
+      "task": "Test execution",
+      "dates": "Before the due date 2026-09-12",
+      "assumed": false
+    },
+    {
+      "task": "Summary report",
+      "dates": "Within 2 days of execution completing",
+      "assumed": true
+    }
+  ],
+  "deliverables": [
+    "Test Plan",
+    "Test scenarios and cases for the date-range rule",
+    "Defect reports in Jira",
+    "API test collection covering create and update",
+    "Test Summary Report"
+  ],
+  "entry_exit": [
+    {
+      "phase": "Requirement Analysis",
+      "entry": "BOOK-214 acceptance criteria and error contract are available.",
+      "exit": "Criteria understood, ambiguities on legacy date handling resolved."
+    },
+    {
+      "phase": "Test Execution",
+      "entry": "Build deployed to QA and smoke passes.",
+      "exit": "All designed cases executed and defects logged."
+    },
+    {
+      "phase": "Test Closure",
+      "entry": "Case results and defect reports complete.",
+      "exit": "Test Summary Report delivered and accepted."
+    }
+  ],
+  "defect_process": {
+    "tool": "JIRA",
+    "severity_model": "Severity by data-integrity impact, priority by proximity to the 2026.9.0 release.",
+    "pocs": [
+      {
+        "area": "Backend",
+        "poc": "A. Developer (ticket assignee)",
+        "assumed": false
+      },
+      {
+        "area": "Product",
+        "poc": "B. ProductOwner (reporter)",
+        "assumed": false
+      }
+    ]
+  },
+  "tools": [
+    "JIRA for defect tracking",
+    "An API client for endpoint testing",
+    "A load tool for the p95 latency check"
+  ],
+  "risks": [
+    {
+      "risk": "Legacy clients send dates as epoch millis, which may bypass the new validation.",
+      "mitigation": "Add explicit cases for epoch-millis payloads and confirm the rule applies after parsing."
+    },
+    {
+      "risk": "Existing bookings that violate the rule may fail on read after the change.",
+      "mitigation": "Seed violating records in QA before the build lands and verify read and partial-update paths."
+    },
+    {
+      "risk": "BOOK-230 (UI date picker) is not ready, blocking the integration check.",
+      "mitigation": "Run API-level integration checks first and defer the UI pass until BOOK-230 is deployed."
+    }
+  ],
+  "assumptions": [
+    {
+      "field": "Test case creation dates",
+      "assumed_value": "Before the 2026.9.0 fix version",
+      "why": "The ticket names a fix version and a due date but no sprint dates, so the case-creation window is inferred."
+    },
+    {
+      "field": "Load test profile",
+      "assumed_value": "50 rps sustained against the create endpoint",
+      "why": "The description states a p95 target at 50 rps but does not define the ramp or duration."
+    },
+    {
+      "field": "Browser and device matrix",
+      "assumed_value": "Not applicable at API level",
+      "why": "The ticket describes an API change; UI coverage is tracked on BOOK-230."
+    }
+  ],
+  "dropped_scope": [
+    {
+      "type": "Rate Limiting",
+      "reason": "The ticket's warning panel states rate limiting is already applied at the gateway and must not be duplicated, so it is out of scope for this story."
+    },
+    {
+      "type": "Security",
+      "reason": "The change introduces no new authentication, authorisation or data-exposure surface. Nothing in the ticket justifies security scope."
+    },
+    {
+      "type": "Internationalization",
+      "reason": "No locale or timezone requirement appears on the ticket. Raised as a question rather than assumed into scope."
+    }
+  ]
+}

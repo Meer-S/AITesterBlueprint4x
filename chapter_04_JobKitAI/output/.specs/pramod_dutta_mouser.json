@@ -1,0 +1,111 @@
+{
+  "output": "/Users/promode/Documents/AITesterBlueprin4x/chapter_04_JobKitAI/output/Pramod_Dutta_Mouser_Electronics_Software_QA_Team_Lead.docx",
+  "docTitle": "Pramod Dutta — Software QA Team Lead — Mouser Electronics",
+  "name": "PRAMOD DUTTA",
+  "title": "==SOFTWARE QA TEAM LEAD==  ·  TEST AUTOMATION ARCHITECT",
+  "contact": [
+    ["Bengaluru, Karnataka, India", "pramoddutta@live.com|mailto:pramoddutta@live.com", "+91 96863 18062"],
+    ["linkedin.com/in/pramoddutta|https://linkedin.com/in/pramoddutta", "github.com/pramoddutta|https://github.com/pramoddutta", "thetestingacademy.com|https://thetestingacademy.com"]
+  ],
+  "margin": 0.45,
+  "sections": [
+    {
+      "heading": "SUMMARY",
+      "body": "==Software QA Team Lead== and test automation architect with [confirm total years]+ years leading quality engineering for SaaS, developer-tooling, and automotive-retail platforms. Owns frameworks covering **9,000+ automated test cases** and built a Docker Swarm-based Selenium Grid executing **3,500+ tests daily**. Combines QA team leadership, test strategy, REST API testing, CI/CD, and hands-on automation with Selenium, Java, JavaScript / Node.js, Ruby, Cypress, and Cucumber."
+    },
+    {
+      "heading": "CORE SKILLS",
+      "rows": [
+        ["==QA Leadership==", "Team leadership · Hiring and onboarding · Code review · Career development · Test strategy and estimation · Training"],
+        ["==Testing & Architecture==", "Functional test planning · Regression testing · Web and API testing · Framework architecture · Shift-left QA · Quality review gates"],
+        ["==Automation==", "Selenium WebDriver · Cucumber / BDD · Cypress · Protractor · WebdriverJS · CasperJS · PhantomCSS"],
+        ["Languages", "Java · JavaScript / Node.js · Ruby · [confirm Python proficiency]"],
+        ["API & Services", "REST API testing · Custom Node.js API frameworks · [confirm SOAP API testing]"],
+        ["CI/CD & Infrastructure", "Jenkins · Docker · Docker Swarm · Selenium Grid · Git"],
+        ["Tools", "JIRA · Confluence · BrowserStack · Percy · Grunt · [confirm JMeter, pytest, QTP, or Robot Framework only if used professionally]"],
+        ["Practices", "Agile / Scrum (PSM I) · CI/CD · Team standards · Cross-functional release readiness"]
+      ],
+      "note": "FIT GAPS — the supplied resume does not support SOAP, performance testing/JMeter, pytest, QTP, Robot Framework, VBScript, C, ISTQB Advanced, or a completed degree. Keep unsupported items absent; remove the bracketed confirmation prompts if you do not have that experience."
+    },
+    {
+      "heading": "PROFESSIONAL EXPERIENCE",
+      "roles": [
+        {
+          "title": "Lead SDET",
+          "org": "Tekion Corp",
+          "meta": "Dec 2020 – Present  |  Bengaluru, India  |  Automotive retail cloud platform",
+          "bullets": [
+            "==Lead a team of [team size] SDETs== through hiring, onboarding, code review, career development, and technical guidance; grew the automation function from [starting team size] to [current team size] engineers.",
+            "==Own the end-to-end test automation framework and regression strategy== for a multi-dealer SaaS platform, covering **9,000+ automated test cases** across web and API layers in [dealer environment count] environments.",
+            "==Define test strategy and effort estimates== for manual, automation, and REST API testing in partnership with engineering squads.",
+            "Established organization-wide automation guidelines and review gates adopted by [team count] teams, strengthening quality standards across multiple squads.",
+            "Cut the full regression cycle from [baseline duration] to [current duration], enabling [release frequency] releases and removing QA as a release bottleneck.",
+            "Raised automated regression coverage from [baseline percentage]% to [current percentage]% and reduced production defect escapes by [reduction percentage]% across [squad count] squads."
+          ]
+        },
+        {
+          "title": "QA Lead",
+          "org": "BrowserStack",
+          "meta": "Dec 2019 – Dec 2020  |  Mumbai, India  |  Developer testing infrastructure",
+          "bullets": [
+            "==Led QA and release readiness== for four products: Percy, Local Binary, Live, and App Live, serving [customer count]+ developer customers.",
+            "Designed and shipped a hybrid test automation framework using Selenium WebDriver, Ruby, Cucumber / BDD, Cypress, and Jenkins, adopted by [product team count] product teams.",
+            "Replaced manual regression processes with automated coverage, eliminating [hours saved] hours per release and shortening the QA cycle by [cycle reduction percentage]%.",
+            "Partnered with product and engineering teams on quality decisions for [release count] releases across a broad browser and device matrix."
+          ]
+        },
+        {
+          "title": "Senior SDET · Test Architect",
+          "org": "Wingify (VWO)",
+          "meta": "May 2016 – Dec 2019  |  New Delhi, India  |  A/B testing and experimentation SaaS",
+          "bullets": [
+            "Served as test architect for VWO.com, an A/B testing and experimentation platform serving [customer count]+ customers.",
+            "Built and scaled a Docker Swarm-based Selenium Grid executing **3,500+ automated tests daily** in CI/CD with parallel execution, cutting suite runtime from [baseline runtime] to [current runtime].",
+            "Created UI automation for the VWO website and app with Node.js, CasperJS, and PhantomCSS, plus end-to-end suites using Selenium WebDriverJS and Protractor through Jenkins and Grunt.",
+            "Developed a custom Node.js framework validating **200+ enterprise REST API endpoints daily**.",
+            "Identified critical security vulnerabilities in PushCrew during the internal Hack Your Own Code programme."
+          ]
+        },
+        {
+          "title": "[Pre-2016 role title]",
+          "org": "[Pre-2016 company]",
+          "meta": "[Start date] – Apr 2016  |  [Location]  |  [Domain]",
+          "bullets": [
+            "[Add two evidence-based bullets covering responsibilities, tools, scale, and outcomes.]"
+          ]
+        }
+      ],
+      "note": "TIMELINE CHECK — listed employment begins in May 2016, while the summary states 13+ years. Add accurate pre-2016 roles before submitting."
+    },
+    {
+      "heading": "FOUNDER & INSTRUCTOR — THETESTINGACADEMY",
+      "roles": [
+        {
+          "title": "Founder & Instructor",
+          "org": "TheTestingAcademy",
+          "meta": "2016 – Present  |  QA education brand  |  thetestingacademy.com",
+          "bullets": [
+            "==Train QA engineers in test automation and CI/CD== across Selenium, API testing, Playwright, and related quality engineering practices, reaching [subscriber count]+ YouTube subscribers, [student count]+ students, and [monthly reader count]+ monthly readers.",
+            "Published [tutorial count]+ tutorials and [course count] structured courses for working QA engineers.",
+            "[Add speaking engagements, conference talks, or open-source contributions, if applicable.]"
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "EDUCATION",
+      "rows": [
+        ["[Degree and field]", "[University] · [Graduation year]"]
+      ]
+    },
+    {
+      "heading": "CERTIFICATIONS & AWARDS",
+      "bullets": [
+        "Professional Scrum Master I (PSM I) — Scrum.org, [year]",
+        "Team Lead Award, BrowserStack — [verify date; supplied date predates employment]",
+        "Hack Your Own Code recognition, Wingify — identified critical security vulnerabilities in PushCrew",
+        "[Add ISTQB Advanced only if earned; otherwise delete this line.]"
+      ]
+    }
+  ]
+}
