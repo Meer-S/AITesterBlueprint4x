@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#VWO-49] [VWO] Add Passkey and SSO Login Options to VWO Login Page</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=UTF-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://bugzz.atlassian.net/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [VWO-49]&nbsp;<a href="https://bugzz.atlassian.net/browse/VWO-49">[VWO] Add Passkey and SSO Login Options to VWO Login Page</a>
+            <span class="subText">
+               Created: 19/Apr/26                   &nbsp;Updated: 01/Jul/26
+
+                                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">To Do</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://bugzz.atlassian.net/secure/BrowseProject.jspa?id=10033">VWO Project</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Components:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects versions:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix versions:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Story
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Medium
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                        
+                
+        
+            <a class="user-hover" rel="712020:385d5412-a057-4043-bb6d-414353088a65"
+                id="word_reporter_712020:385d5412-a057-4043-bb6d-414353088a65"
+                href="https://bugzz.atlassian.net/secure/ViewProfile.jspa?accountId=712020%3A385d5412-a057-4043-bb6d-414353088a65">
+                    Pramod
+                </a>
+
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                    Unassigned
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+            				Unresolved
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-11322-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+    
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Rank:</b></td>
+                <td id="customfield_10019-11322-value" class="value" bgcolor="#ffffff" width="80%">      0|i001xj:
+  </td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Sprint:</b></td>
+                <td id="customfield_10020-11322-value" class="value" bgcolor="#ffffff" width="80%"></td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p><b>Priority:</b><br/>
+High</p>
+
+<p><b>Epic Link:</b><br/>
+Authentication Enhancements</p>
+
+<hr />
+
+<p><b>Description:</b><br/>
+As a user, I want to log in using either Passkey or Single Sign-On (SSO), so that I can access my account more securely and conveniently without relying solely on email/password authentication.</p>
+
+<p>Two new login options — <b>“Sign in using SSO”</b> and <b>“Sign in with Passkey”</b> — have been added to the login page alongside existing authentication methods. These options should function seamlessly and provide a smooth user experience across supported environments.</p>
+
+<hr />
+
+<p><b>Acceptance Criteria:</b></p>
+
+<ol>
+	<li><b>UI Visibility</b>
+	<ul>
+		<li>GIVEN the user is on the login page</li>
+		<li>THEN the following buttons should be visible:
+		<ul>
+			<li>“Sign in using SSO”</li>
+			<li>“Sign in with Passkey”</li>
+		</ul>
+		</li>
+		<li>AND they should be displayed below the “Sign in with Google” option</li>
+	</ul>
+	</li>
+	<li><b>SSO Login Flow</b>
+	<ul>
+		<li>GIVEN the user clicks on “Sign in using SSO”</li>
+		<li>WHEN valid SSO credentials are provided</li>
+		<li>THEN the user should be successfully authenticated and redirected to the dashboard</li>
+		<li>AND appropriate error messages should be shown for invalid credentials</li>
+	</ul>
+	</li>
+	<li><b>Passkey Login Flow</b>
+	<ul>
+		<li>GIVEN the user clicks on “Sign in with Passkey”</li>
+		<li>WHEN a registered passkey is available and verified</li>
+		<li>THEN the user should be logged in successfully</li>
+		<li>AND redirected to the dashboard</li>
+		<li>AND if no passkey is available, a fallback or guidance message should be displayed</li>
+	</ul>
+	</li>
+	<li><b>Error Handling</b>
+	<ul>
+		<li>Proper error messages should be displayed for:
+		<ul>
+			<li>Failed SSO authentication</li>
+			<li>Passkey authentication failure</li>
+			<li>Unsupported browser/device for passkeys</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+	<li><b>Compatibility</b>
+	<ul>
+		<li>Passkey login should work on supported browsers/devices only</li>
+		<li>SSO should work across all configured identity providers</li>
+	</ul>
+	</li>
+	<li><b>Security</b>
+	<ul>
+		<li>All authentication flows must follow secure protocols (OAuth/SAML/WebAuthn)</li>
+		<li>No sensitive data should be exposed in UI or network logs</li>
+	</ul>
+	</li>
+</ol>
+
+
+<hr />
+
+<p><b>Out of Scope:</b></p>
+
+<ul>
+	<li>Passkey registration flow (covered in separate story)</li>
+	<li>SSO provider configuration</li>
+</ul>
+
+
+<hr />
+
+<p><b>Test Scenarios:</b></p>
+
+<ol>
+	<li>Verify both new buttons are visible and correctly positioned</li>
+	<li>Validate successful login via SSO</li>
+	<li>Validate failed SSO login with incorrect credentials</li>
+	<li>Validate successful login via Passkey</li>
+	<li>Validate behavior when no passkey is registered</li>
+	<li>Validate behavior on unsupported browsers/devices</li>
+	<li>Verify UI responsiveness and accessibility</li>
+</ol>
+
+
+<hr />
+
+<p><b>Definition of Done:</b></p>
+
+<ul>
+	<li>Feature implemented and deployed to staging</li>
+	<li>All acceptance criteria met</li>
+	<li>QA sign-off completed</li>
+	<li>No critical or high defects open</li>
+	<li>Documentation updated</li>
+</ul>
+
+
+<hr />
+
+<p>If you want, I can also generate <b>test cases, edge cases, or automation scenarios (Playwright/Cypress)</b> for this story.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-10000"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                    
+                
+        
+            <a class="user-hover" rel="712020:385d5412-a057-4043-bb6d-414353088a65"
+                id="word_commented_712020:385d5412-a057-4043-bb6d-414353088a65"
+                href="https://bugzz.atlassian.net/secure/ViewProfile.jspa?accountId=712020%3A385d5412-a057-4043-bb6d-414353088a65">
+                    Pramod
+                </a>
+
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Jul/26</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-10000"><td bgcolor="#ffffff">
+            <p>not able to reproduce</p>
+        </td></tr>
+            </table>
+Generated at Sun Aug 30 04:20:49 UTC 2026 by Pramod using Jira 1001.0.0-SNAPSHOT#100294-rev:699dda19a3d49050afba1f0e24e0b62d363c1be4.
+
+</body>
+</html>
