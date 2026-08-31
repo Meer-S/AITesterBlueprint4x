@@ -37,6 +37,12 @@ AI-powered test automation blueprint.
     - [Anti-hallucination design](#anti-hallucination-design)
     - [Field notes from the build](#field-notes-from-the-build)
   - [Chapter 08: n8n Agents](#chapter-08-n8n-agents)
+    - [The Jira agent pair (01, 02)](#the-jira-agent-pair-01-02)
+    - [Swapping the brain: local Ollama and Groq (03)](#swapping-the-brain-local-ollama-and-groq-03)
+    - [Bug triage into Google Sheets (04)](#bug-triage-into-google-sheets-04)
+    - [Production bug RCA pipeline (05)](#production-bug-rca-pipeline-05)
+    - [Social media content chain (06)](#social-media-content-chain-06)
+    - [Cross-chapter takeaway](#cross-chapter-takeaway)
 - [License](#license)
 
 ## Overview
@@ -784,17 +790,40 @@ Three findings that only surfaced by running it against a live Jira and a live m
 
 ### Chapter 08: n8n Agents
 
-Two n8n workflows that wire an LLM to Jira as a **tool**, so a chat message like
-"fetch PROJ-12" or "raise a bug for the login page" becomes a real Jira API call.
+Six n8n workflows plus the prompt files that drive them. The chapter walks the same
+Jira-agent idea from chapter 07 across a visual low-code canvas, then pushes past it
+into multi-tool agents (Jira + Google Sheets), local models, a deterministic RCA
+pipeline, and a LinkedIn content chain.
 
-**Why:** it is the same Jira-agent idea as chapter 07, expressed on a visual
-low-code canvas instead of in Python, which makes the agent loop legible to people
-who will not read a call stack.
+**Why:** an agent loop drawn on a canvas is legible to people who will not read a call
+stack. It also makes the failure modes visible: you can see exactly where the LLM is
+allowed to decide, and where a plain node does the work.
 
-**Q&A - why use this?**
-- **Q: When do I reach for it?** A: When the workflow should be editable by someone who does not write Python, or when it needs to run on a schedule without hosting your own app.
-- **Q: What does it replace?** A: The glue code around auth, retries and scheduling. n8n stores credentials by reference, so the exported JSON carries no secrets.
-- **Q: What's the gotcha?** A: The agent decides *when* to call the Jira tool, so a vague prompt can create the wrong ticket. Chapter 07's approach (deterministic fetch, one bounded LLM step) trades that flexibility for repeatability.
+```
+chapter_08_n8n/
+├── 01_Raw_BugTriage.prompt.md        # the persona-only triage prompt (v1)
+├── 02_ModifiedBugTriagePrompt.prompt.md  # v2: same persona + tool-calling contract
+├── 03_RCA_AI_Agent.prompt.md         # the meta-prompt that generated workflow 05
+├── Agents/
+│   ├── 01_FetchJIRATicket_AIAgent.json   # 9 nodes: chat/schedule -> agent -> Jira get
+│   ├── 02_CreateJIRATicket_AIAgent.json  # 9 nodes: same shape, Jira create
+│   ├── 03_FetchJIRACreateTCAIAgent_Local_LLM_ollama.json  # 6 nodes: local Ollama / Groq brain
+│   ├── 04_BugTriageAIAgent.json          # 12 nodes: Jira + Google Sheets, two tools
+│   ├── 05_RCA_Chatgpt_Jira_Production_Bug_RCA_Automation.json  # 35 nodes: full RCA pipeline
+│   └── 06_Social_Media_AIAgent.json      # 15 nodes: topic -> post -> image -> review -> LinkedIn
+└── resources/
+    ├── Jira_Bug_Triage_Sample.xlsx   # the triage sheet the agent writes into
+    └── VWO-49_RCA.doc                # a sample RCA output
+```
+
+Import any file through **n8n > Workflows > Import from File**, then attach your own
+credentials. n8n stores credentials by reference, so the exported JSON carries no secrets.
+
+#### The Jira agent pair (01, 02)
+
+The starting shape: a trigger, a brain, a memory, and exactly one Jira tool. A chat
+message like "fetch PROJ-12" or "raise a bug for the login page" becomes a real Jira
+API call.
 
 ```mermaid
 flowchart LR
@@ -815,14 +844,189 @@ flowchart LR
     class OUT out
 ```
 
-Import either file through **n8n > Workflows > Import from File**, then attach your
-own `openAiApi` and `jiraSoftwareCloudApi` credentials:
+**Q&A - why use this?**
+- **Q: When do I reach for it?** A: When the workflow should be editable by someone who does not write Python, or when it needs to run on a schedule without hosting your own app.
+- **Q: What does it replace?** A: The glue code around auth, retries and scheduling.
+- **Q: What's the gotcha?** A: The agent decides *when* to call the Jira tool, so a vague prompt can create the wrong ticket. Chapter 07's approach (deterministic fetch, one bounded LLM step) trades that flexibility for repeatability.
 
+#### Swapping the brain: local Ollama and Groq (03)
+
+The same fetch agent with the OpenAI node replaced. Two model nodes sit in the file:
+an **Ollama Chat Model** (wired in, runs on your own machine) and a **Groq Chat Model**
+(parked, swap the connection to use it). Memory is dropped, so the run is stateless.
+
+```mermaid
+flowchart LR
+    CT["Chat trigger"] --> AG["AI Agent"]
+    OL["Ollama Chat Model<br/>local, wired in"] --> AG
+    GQ["Groq Chat Model<br/>hosted, parked"] -.swap.-> AG
+    AG --> JT["Jira tool<br/>get an issue"]
+
+    classDef src fill:#57606a,stroke:#24292f,color:#fff
+    classDef ai fill:#1f6feb,stroke:#0b3d91,color:#fff
+    classDef alt fill:#8250df,stroke:#4c2889,color:#fff
+    classDef gate fill:#bf8700,stroke:#7a5600,color:#fff
+    class CT src
+    class AG,OL ai
+    class GQ alt
+    class JT gate
 ```
-chapter_08_n8n/Agents/
-├── 01_FetchJIRATicket_AIAgent.json    # 9 nodes: chat/schedule trigger -> agent -> Jira get
-└── 02_CreateJIRATicket_AIAgent.json   # 9 nodes: same shape, Jira create
+
+**Q&A - why use this?**
+- **Q: Why bother running locally?** A: Ticket text is company data. A local model keeps it on your machine, and the token bill goes to zero.
+- **Q: What breaks?** A: Small local models are weaker at tool calling. They will describe the Jira call instead of making it. Groq is the middle ground: hosted and fast, but still not OpenAI-grade at multi-step tool use.
+- **Q: How do I decide?** A: Start on a hosted model to prove the workflow, then downgrade the brain and see if the tool calls survive.
+
+#### Bug triage into Google Sheets (04)
+
+The first genuinely multi-tool agent: it reads **many** Jira issues, triages each one,
+and writes a row per issue into a Google Sheet keyed on `jira_key`. Four brains are
+present in the file (OpenAI wired in, Groq and DeepSeek parked) so you can A/B the
+triage quality on the same prompt.
+
+```mermaid
+flowchart LR
+    CT["Chat trigger"] --> AG["AI Agent"]
+    BR["Brain<br/>OpenAI / Groq / DeepSeek"] --> AG
+    ME["Memory<br/>buffer window"] --> AG
+    AG --> JT["Jira tool<br/>get many issues"]
+    AG --> GS["Google Sheets tool<br/>append or update row"]
+    JT --> LOOP["Triage issue 1 -> write<br/>triage issue 2 -> write"]
+    LOOP --> GS
+    GS --> OUT["Triage sheet<br/>keyed on jira_key"]
+
+    classDef src fill:#57606a,stroke:#24292f,color:#fff
+    classDef ai fill:#1f6feb,stroke:#0b3d91,color:#fff
+    classDef gate fill:#bf8700,stroke:#7a5600,color:#fff
+    classDef out fill:#2da44e,stroke:#0f5323,color:#fff
+    class CT src
+    class AG,BR ai
+    class ME,JT,GS,LOOP gate
+    class OUT out
 ```
+
+The two prompt files next to it are the interesting part, because they are the same
+prompt one revision apart:
+
+| | `01_Raw_BugTriage.prompt.md` | `02_ModifiedBugTriagePrompt.prompt.md` |
+|---|---|---|
+| Length | 72 lines | 370 lines |
+| Covers | Persona, severity vs priority, S0-S4 and P0-P4 scales, category taxonomy, triage checklist, rules of the desk | All of that, **plus** the tool contract |
+| Missing | Any mention of the tools | - |
+| Adds | - | Mandatory execution order, pagination and dedup rules, per-issue write loop, column-by-column sheet mapping, sheet-tool error handling, final summary format |
+
+Version 1 produces excellent triage *as text*. It does not reliably call Google Sheets,
+because nothing in it says the agent must. Version 2 keeps the judgment intact and bolts
+on the execution contract: retrieve, triage one, **write one**, repeat, and never invent
+a Jira issue.
+
+**Q&A - why use this?**
+- **Q: What is the actual lesson?** A: A great persona prompt is not an agent prompt. The moment tools enter, you have to spell out the call order, the loop granularity, and what counts as success.
+- **Q: Why write one row at a time?** A: Batching at the end means one failure loses the whole run. Per-issue writes make a partial run still useful.
+- **Q: Why is `jira_key` the match column?** A: It makes the write idempotent. Re-running updates rows instead of duplicating them.
+
+#### Production bug RCA pipeline (05)
+
+The largest workflow in the repo: 35 nodes that turn a Jira production-bug event into a
+formatted RCA workbook in Google Drive, as both a Google Sheet and an `.xlsx` export.
+
+The architectural rule is the opposite of workflow 04. Jira, Drive and Sheets are **not**
+agent tools here. They are plain deterministic nodes. The AI Agent does exactly one job:
+turn the evidence package into structured RCA JSON, validated by an output parser.
+
+```mermaid
+flowchart TD
+    JT["Jira trigger<br/>production bug"] --> CFG["Workflow Configuration"]
+    MT["Manual trigger + sample event"] --> CFG
+    CFG --> NRM["Normalize Jira event"]
+    NRM --> GET["Jira: get issue + comments"]
+    GET --> JQL["Verify production JQL"]
+    JQL --> ISP{"Still a production bug?"}
+    ISP -->|no| SK1["Skip: JQL no longer matches"]
+    ISP -->|yes| AUD["Audit: read rows"]
+    AUD --> DUP{"Duplicate revision?"}
+    DUP -->|yes| SK2["Skip: already generated"]
+    DUP -->|no| EV["Build Jira evidence package"]
+    EV --> AI["AI Agent: generate RCA<br/>structured output parser"]
+    AI --> VAL{"RCA JSON valid?"}
+    VAL -->|no| ERR["Stop and error"]
+    VAL -->|yes| WB{"Existing workbook?"}
+    WB -->|yes| REUSE["Reuse workbook"]
+    WB -->|no| COPY["Drive: copy RCA template"]
+    REUSE --> POP["Sheets: clear + populate"]
+    COPY --> POP
+    POP --> XLSX["Drive: export + name + move .xlsx"]
+    XLSX --> LOG["Audit: append success"]
+    LOG --> SUM["Success summary"]
+
+    classDef src fill:#57606a,stroke:#24292f,color:#fff
+    classDef ai fill:#1f6feb,stroke:#0b3d91,color:#fff
+    classDef gate fill:#bf8700,stroke:#7a5600,color:#fff
+    classDef out fill:#2da44e,stroke:#0f5323,color:#fff
+    classDef bad fill:#cf222e,stroke:#82071e,color:#fff
+    class JT,MT,CFG,NRM,GET src
+    class AI ai
+    class JQL,ISP,DUP,VAL,WB,EV,AUD gate
+    class COPY,REUSE,POP,XLSX,LOG,SUM out
+    class SK1,SK2,ERR bad
+```
+
+Three guards run before a single token is spent: the JQL re-check (the label may have
+been removed since the trigger fired), the audit-table dedup (same issue, same revision,
+already done), and the structured-output validation (a malformed RCA stops the run
+instead of writing garbage into the template).
+
+`03_RCA_AI_Agent.prompt.md` is the 1019-line meta-prompt that produced this workflow. It
+specifies the config Set node, the template requirement, every node in the required
+workflow, the RCA agent system prompt, the structured output schema, the human review
+rule, and the acceptance tests. The workflow JSON is the output; the prompt is the spec.
+
+**Q&A - why use this?**
+- **Q: Why not let the agent call Jira and Sheets itself, like workflow 04?** A: Because an RCA writes into a shared template that people sign off on. You do not want the model deciding whether to copy a file. Agentic where judgment is needed, deterministic everywhere else.
+- **Q: What does the audit table buy me?** A: Idempotency. Jira fires on every update; without the audit row you would generate a fresh RCA workbook on every comment.
+- **Q: Why copy a template instead of building the sheet?** A: The template carries formatting, formulas, dropdowns and named worksheets. Copying preserves all of it; generating from scratch loses it.
+
+#### Social media content chain (06)
+
+Two independent pipelines in one file, both on schedule triggers. The main chain is a
+sequence of specialised agents rather than one agent with many tools:
+
+```mermaid
+flowchart LR
+    ST["Schedule trigger"] --> TG["Content Topic Generator"]
+    TG --> CC["Content Creator<br/>LinkedIn post"]
+    CC --> IMG["Gemini: generate image"]
+    CC --> HT["HashTags agent"]
+    IMG --> MG["Merge"]
+    HT --> MG
+    MG --> RV["Review the Post"]
+    RV --> LI["LinkedIn: create a post"]
+
+    ST2["Schedule trigger 2"] --> CG["Content Generator<br/>Gemini tool + memory"]
+    CG --> LI2["LinkedIn: create a post"]
+    CG --> UP["Upload Post node"]
+
+    classDef src fill:#57606a,stroke:#24292f,color:#fff
+    classDef ai fill:#1f6feb,stroke:#0b3d91,color:#fff
+    classDef gate fill:#bf8700,stroke:#7a5600,color:#fff
+    classDef out fill:#2da44e,stroke:#0f5323,color:#fff
+    class ST,ST2 src
+    class TG,CC,HT,RV,CG,IMG ai
+    class MG gate
+    class LI,LI2,UP out
+```
+
+**Q&A - why use this?**
+- **Q: Why five agents instead of one?** A: Each one has a single job and a short prompt, so you can read its output and fix the one that is wrong. A single mega-agent asked to pick a topic, write, illustrate, tag and review will quietly do the last step badly.
+- **Q: What is the Review node for?** A: It is the quality gate before anything reaches a real audience. Swap it for a manual approval node if you are not ready to auto-post.
+- **Q: How does this relate to chapter 06?** A: Chapter 06 is the voice and hook system as a Claude skill. This is the same idea running unattended on a schedule.
+
+#### Cross-chapter takeaway
+
+Workflows 01-04 and 06 are **agentic**: the model chooses which tool to call. Workflow 05
+is **deterministic with a bounded LLM step**, the same shape as chapter 07's B.L.A.S.T.
+agent. The chapter is arranged so you feel the difference: agentic is faster to build and
+easier to demo, deterministic is what survives contact with a template your team signs off on.
 
 ## License
 
